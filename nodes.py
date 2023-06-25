@@ -39,6 +39,8 @@ def interrupt_processing(value=True):
 
 MAX_RESOLUTION=8192
 
+LOCKFILE="/tmp/image_write.lock"
+
 class CLIPTextEncode:
     @classmethod
     def INPUT_TYPES(s):
