@@ -10,6 +10,7 @@ import time
 
 from PIL import Image, ImageOps
 from PIL.PngImagePlugin import PngInfo
+from filelock import FileLock
 import numpy as np
 import safetensors.torch
 
@@ -1063,7 +1064,8 @@ class SaveImage:
                     metadata.add_text(x, json.dumps(extra_pnginfo[x]))
 
             file = f"{filename}_{counter:05}_.png"
-            img.save(os.path.join(full_output_folder, file), pnginfo=metadata, compress_level=4)
+            with FileLock(LOCKFILE):
+                img.save(os.path.join(full_output_folder, file), pnginfo=metadata, compress_level=4)
             results.append({
                 "filename": file,
                 "subfolder": subfolder,
